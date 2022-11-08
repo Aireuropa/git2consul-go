@@ -19,7 +19,7 @@ package kv
 import (
 	"fmt"
 
-	"github.com/KohlsTechnology/git2consul-go/config"
+	"github.com/Aireuropa/git2consul-go/config"
 	"github.com/apex/log"
 	"github.com/hashicorp/consul/api"
 )

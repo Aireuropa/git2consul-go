@@ -19,7 +19,7 @@ package repository
 import (
 	"fmt"
 
-	"github.com/KohlsTechnology/git2consul-go/config"
+	"github.com/Aireuropa/git2consul-go/config"
 	"github.com/apex/log"
 )
 

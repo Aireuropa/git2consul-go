@@ -21,7 +21,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/KohlsTechnology/git2consul-go/repository"
+	"github.com/Aireuropa/git2consul-go/repository"
 )
 
 //Status codes for path formatting

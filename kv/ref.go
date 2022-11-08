@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"path"
 
-	"github.com/KohlsTechnology/git2consul-go/repository"
+	"github.com/Aireuropa/git2consul-go/repository"
 	"github.com/hashicorp/consul/api"
 	"gopkg.in/src-d/go-git.v4/plumbing"
 )

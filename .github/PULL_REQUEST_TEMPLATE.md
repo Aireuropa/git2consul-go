@@ -1,5 +1,5 @@
 <!--
-    Please read https://github.com/KohlsTechnology/git2consul-go/blob/master/.github/PULL_REQUEST_TEMPLATE.md before submitting
+    Please read https://github.com/Aireuropa/git2consul-go/blob/master/.github/PULL_REQUEST_TEMPLATE.md before submitting
     your pull request. Please fill in each section below to help us better prioritize your pull request. Thanks!
 -->
 

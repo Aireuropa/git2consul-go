@@ -20,10 +20,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/KohlsTechnology/git2consul-go/config"
-	"github.com/KohlsTechnology/git2consul-go/kv"
-	"github.com/KohlsTechnology/git2consul-go/repository"
-	"github.com/KohlsTechnology/git2consul-go/watcher"
+	"github.com/Aireuropa/git2consul-go/config"
+	"github.com/Aireuropa/git2consul-go/kv"
+	"github.com/Aireuropa/git2consul-go/repository"
+	"github.com/Aireuropa/git2consul-go/watcher"
 	"github.com/apex/log"
 )
 

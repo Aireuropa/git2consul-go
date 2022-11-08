@@ -19,8 +19,8 @@ package watch
 import (
 	"sync"
 
-	"github.com/KohlsTechnology/git2consul-go/config"
-	"github.com/KohlsTechnology/git2consul-go/repository"
+	"github.com/Aireuropa/git2consul-go/config"
+	"github.com/Aireuropa/git2consul-go/repository"
 	"github.com/apex/log"
 )
 

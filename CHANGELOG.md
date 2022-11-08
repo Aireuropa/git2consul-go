@@ -1,5 +1,10 @@
 Starting with release v0.1.2 See the [releases page](https://github.com/KohlsTechnology/git2consul-go/releases).
-
+## v0.2.0 (November 8, 2022)
+FEATURES:
+* None
+CHANGES:
+* Update go modules
+* Point to Aireuropa repository
 ## v0.1.1 (January 6, 2020)
 FEATURES:
 * None
