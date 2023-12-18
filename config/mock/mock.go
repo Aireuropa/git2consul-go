@@ -17,7 +17,6 @@ limitations under the License.
 package mock
 
 import (
-	"io/ioutil"
 	"os"
 	"time"
 
@@ -41,7 +40,7 @@ func RepoConfig(repoURL string) *config.Repo {
 
 // Config returns a mock Config object with one repository configuration
 func Config(repoURL string) *config.Config {
-	localStore, err := ioutil.TempDir("", "git2consul-test-local")
+	localStore, err := os.MkdirTemp("", "git2consul-test-local")
 	if err != nil {
 		localStore = os.TempDir()
 	}

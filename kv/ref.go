@@ -21,8 +21,8 @@ import (
 	"path"
 
 	"github.com/Aireuropa/git2consul-go/repository"
+	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/hashicorp/consul/api"
-	"gopkg.in/src-d/go-git.v4/plumbing"
 )
 
 // Get local branch ref from the KV

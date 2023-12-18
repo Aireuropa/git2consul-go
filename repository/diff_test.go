@@ -17,15 +17,14 @@ limitations under the License.
 package repository
 
 import (
-	"io/ioutil"
 	"os"
 	"testing"
 
 	"github.com/Aireuropa/git2consul-go/config/mock"
 	"github.com/Aireuropa/git2consul-go/repository/mocks"
+	git "github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/utils/merkletrie"
 	"github.com/stretchr/testify/assert"
-	git "gopkg.in/src-d/go-git.v4"
-	"gopkg.in/src-d/go-git.v4/utils/merkletrie"
 )
 
 func TestDiffStatus(t *testing.T) {
@@ -33,7 +32,7 @@ func TestDiffStatus(t *testing.T) {
 	defer os.RemoveAll(remotePath)
 
 	repoConfig := mock.RepoConfig(remotePath)
-	dstPath, err := ioutil.TempDir("", repoConfig.Name)
+	dstPath, err := os.MkdirTemp("", repoConfig.Name)
 	defer os.RemoveAll(dstPath)
 	assert.Nil(t, err)
 

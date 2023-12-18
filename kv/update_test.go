@@ -18,7 +18,6 @@ package kv
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -41,7 +40,7 @@ func TestUpdateToHead(t *testing.T) {
 	}
 	log.SetLevel(0)
 	//_, repoPath, _, _ := runtime.Caller(1)
-	repoPath, err := ioutil.TempDir("", "local-repo")
+	repoPath, err := os.MkdirTemp("", "local-repo")
 	defer os.RemoveAll(repoPath)
 	assert.NoError(t, err)
 	repo := &mocks.Repo{Path: repoPath, Config: &config.Repo{}, T: t}
@@ -54,7 +53,7 @@ func TestUpdateToHead(t *testing.T) {
 	handler.putBranch(repo, branch.Name())        //nolint:errcheck
 	handler.putKVRef(repo, branch.Name().Short()) //nolint:errcheck
 	//Fake commit
-	f, err := ioutil.TempFile(repoPath, "example.txt")
+	f, err := os.CreateTemp(repoPath, "example.txt")
 	assert.NoError(t, err)
 	f.Write([]byte("A content!")) //nolint:errcheck
 	f.Close()
@@ -79,8 +78,8 @@ func TestUpdateToHead(t *testing.T) {
 	assert.NotEqual(t, string(kvBranch.Value), initialCommit)
 
 	kvPath := filepath.Join(repo.Name(), branch.Name().Short(), fileName)
-	kvContent, _, err := handler.Get(kvPath, nil)                          //nolint:ineffassign,staticcheck
-	fileContent, err := ioutil.ReadFile(filepath.Join(repoPath, fileName)) //nolint:ineffassign,staticcheck
+	kvContent, _, err := handler.Get(kvPath, nil)                      //nolint:ineffassign,staticcheck
+	fileContent, err := os.ReadFile(filepath.Join(repoPath, fileName)) //nolint:ineffassign,staticcheck
 
 	assert.Equal(t, kvContent.Value, fileContent)
 

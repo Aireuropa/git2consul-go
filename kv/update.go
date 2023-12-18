@@ -21,8 +21,8 @@ import (
 
 	"github.com/Aireuropa/git2consul-go/repository"
 	"github.com/apex/log"
-	"gopkg.in/src-d/go-git.v4"
-	"gopkg.in/src-d/go-git.v4/plumbing"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing"
 )
 
 // HandleUpdate handles the update of a particular repository.
@@ -52,7 +52,7 @@ func (h *KVHandler) HandleUpdate(repo repository.Repo) error {
 	return nil
 }
 
-//UpdateToHead handles update to current HEAD comparing diffs against the KV.
+// UpdateToHead handles update to current HEAD comparing diffs against the KV.
 func (h *KVHandler) UpdateToHead(repo repository.Repo) error {
 	head, err := repo.Head()
 	if err != nil {

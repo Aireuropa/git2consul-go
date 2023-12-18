@@ -17,7 +17,6 @@ limitations under the License.
 package repository
 
 import (
-	"io/ioutil"
 	"os"
 	"testing"
 
@@ -37,7 +36,7 @@ func TestClone(t *testing.T) {
 		Config: cfg.Repos[0],
 	}
 
-	localPath, err := ioutil.TempDir(cfg.LocalStore, repo.Config.Name)
+	localPath, err := os.MkdirTemp(cfg.LocalStore, repo.Config.Name)
 	assert.Nil(t, err)
 	defer os.RemoveAll(localPath)
 

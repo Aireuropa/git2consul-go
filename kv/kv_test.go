@@ -18,7 +18,6 @@ package kv
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 	"testing"
@@ -30,14 +29,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-//TestKV runs a test against KVPUT and DeleteKV handler functions.
+// TestKV runs a test against KVPUT and DeleteKV handler functions.
 func TestKV(t *testing.T) {
 	handler := &KVHandler{
 		API: &mocks.KV{T: t},
 		logger: log.WithFields(log.Fields{
 			"caller": "consul",
 		})}
-	repoPath, err := ioutil.TempDir("", "local-repo")
+	repoPath, err := os.MkdirTemp("", "local-repo")
 	defer os.RemoveAll(repoPath)
 	assert.NoError(t, err)
 	repo := &mocks.Repo{Path: repoPath, Config: &config.Repo{}, T: t}
@@ -46,13 +45,13 @@ func TestKV(t *testing.T) {
 	t.Run("testDeleteKV", func(t *testing.T) { testDeleteKV(t, repo, handler) })
 }
 
-//testPutKV verifies the data pushed by putKV function.
+// testPutKV verifies the data pushed by putKV function.
 func testPutKV(t *testing.T, repo repository.Repo, handler *KVHandler) {
-	f, err := ioutil.TempFile(repository.WorkDir(repo), "example.txt")
+	f, err := os.CreateTemp(repository.WorkDir(repo), "example.txt")
 	f.Write([]byte("Example content")) //nolint:errcheck
 	f.Close()
 	assert.NoError(t, err)
-	value, err := ioutil.ReadFile(f.Name())
+	value, err := os.ReadFile(f.Name())
 
 	assert.NoError(t, err)
 	prefix := strings.TrimPrefix(f.Name(), repository.WorkDir(repo))
@@ -74,13 +73,13 @@ func testPutKV(t *testing.T, repo repository.Repo, handler *KVHandler) {
 	}
 }
 
-//testDeleteKV ensures data has been deleted.
+// testDeleteKV ensures data has been deleted.
 func testDeleteKV(t *testing.T, repo repository.Repo, handler *KVHandler) {
-	f, err := ioutil.TempFile(repository.WorkDir(repo), "example.txt")
+	f, err := os.CreateTemp(repository.WorkDir(repo), "example.txt")
 	f.Write([]byte("Example content to delete")) //nolint:errcheck
 	f.Close()
 	assert.NoError(t, err)
-	value, err := ioutil.ReadFile(f.Name()) //nolint:ineffassign,staticcheck
+	value, err := os.ReadFile(f.Name()) //nolint:ineffassign,staticcheck
 
 	prefix := strings.TrimPrefix(f.Name(), repository.WorkDir(repo))
 	err = handler.PutKV(repo, prefix, value)

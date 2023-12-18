@@ -19,7 +19,6 @@ package config
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 	"time"
@@ -35,7 +34,7 @@ func Load(file string) (*Config, error) {
 		"caller": "config",
 	})
 
-	content, err := ioutil.ReadFile(file)
+	content, err := os.ReadFile(file)
 	if err != nil {
 		return nil, err
 	}

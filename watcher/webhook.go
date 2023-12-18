@@ -19,13 +19,13 @@ package watch
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"sort"
 	"sync"
 
+	"github.com/go-git/go-git/v5"
 	"github.com/gorilla/mux"
-	"gopkg.in/src-d/go-git.v4"
 )
 
 // GithubPayload is the response from GitHub
@@ -106,7 +106,7 @@ func (w *Watcher) githubHandler(rw http.ResponseWriter, rq *http.Request) {
 		return
 	}
 
-	body, err := ioutil.ReadAll(rq.Body)
+	body, err := io.ReadAll(rq.Body)
 	if err != nil {
 		http.Error(rw, "Cannot read body", http.StatusInternalServerError)
 		return
@@ -160,7 +160,7 @@ func (w *Watcher) stashHandler(rw http.ResponseWriter, rq *http.Request) {
 	vars := mux.Vars(rq)
 	repository := vars["repository"]
 
-	body, err := ioutil.ReadAll(rq.Body)
+	body, err := io.ReadAll(rq.Body)
 	if err != nil {
 		http.Error(rw, "Cannot read body", http.StatusInternalServerError)
 		return
@@ -223,7 +223,7 @@ func (w *Watcher) bitbucketHandler(rw http.ResponseWriter, rq *http.Request) {
 		return
 	}
 
-	body, err := ioutil.ReadAll(rq.Body)
+	body, err := io.ReadAll(rq.Body)
 	if err != nil {
 		http.Error(rw, "Cannot read body", http.StatusInternalServerError)
 		return
@@ -285,7 +285,7 @@ func (w *Watcher) gitlabHandler(rw http.ResponseWriter, rq *http.Request) {
 		return
 	}
 
-	body, err := ioutil.ReadAll(rq.Body)
+	body, err := io.ReadAll(rq.Body)
 	if err != nil {
 		http.Error(rw, "Cannot read body", http.StatusInternalServerError)
 		return

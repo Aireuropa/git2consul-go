@@ -17,19 +17,18 @@ limitations under the License.
 package mocks
 
 import (
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
 	"time"
 
-	git "gopkg.in/src-d/go-git.v4"
-	"gopkg.in/src-d/go-git.v4/plumbing/object"
+	git "github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing/object"
 )
 
 // InitRemote TODO write useful documentation here
 func InitRemote(t *testing.T) (*git.Repository, string) {
-	repoPath, err := ioutil.TempDir("", "git2consul-remote")
+	repoPath, err := os.MkdirTemp("", "git2consul-remote")
 	if err != nil {
 		t.Fatal(err)
 	}

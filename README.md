@@ -82,7 +82,7 @@ git2consul will attempt to use sane defaults for configuration. However, since g
 | webhook:port              | no       | 9000           | `int`                                      | Webhook listener port that git2consul will be using
 | repos:name                | yes      |                | `string`                                   | Name of the repository. This will match the webhook path, if any are enabled
 | repos:url                 | yes      |                | `string`                                   | The URL of the repository
-| repos:branches            | no       | master         | `string`                                   | Tracking branches of the repository
+| repos:branches            | no       | master         | `[]string`                                   | Tracking branches of the repository
 | repos:source_root         | no       |                | `string`                                   | Source root to apply on the repo.
 | repos:expand_keys         | no       |                | true, false                                | Enable/disable file content evaluation.
 | repos:skip_branch_name    | no       | false          | true, false                                | Enable/disable branch name pruning.

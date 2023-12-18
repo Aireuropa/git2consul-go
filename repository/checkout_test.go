@@ -17,14 +17,13 @@ limitations under the License.
 package repository
 
 import (
-	"io/ioutil"
 	"os"
 	"testing"
 
 	"github.com/Aireuropa/git2consul-go/config/mock"
 	"github.com/Aireuropa/git2consul-go/repository/mocks"
+	git "github.com/go-git/go-git/v5"
 	"github.com/stretchr/testify/assert"
-	git "gopkg.in/src-d/go-git.v4"
 )
 
 func TestCheckoutBranch(t *testing.T) {
@@ -33,7 +32,7 @@ func TestCheckoutBranch(t *testing.T) {
 
 	repoConfig := mock.RepoConfig(remotePath)
 
-	dstPath, err := ioutil.TempDir("", repoConfig.Name)
+	dstPath, err := os.MkdirTemp("", repoConfig.Name)
 	assert.Nil(t, err)
 	defer os.RemoveAll(dstPath)
 

@@ -17,7 +17,6 @@ limitations under the License.
 package repository
 
 import (
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -26,16 +25,16 @@ import (
 	"github.com/Aireuropa/git2consul-go/repository/mocks"
 	"github.com/apex/log"
 	"github.com/apex/log/handlers/discard"
+	git "github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/config"
 	"github.com/stretchr/testify/assert"
-	git "gopkg.in/src-d/go-git.v4"
-	"gopkg.in/src-d/go-git.v4/config"
 )
 
 func init() {
 	log.SetHandler(discard.New())
 }
 
-//TestLoadRepos test load repos from the configuration file.
+// TestLoadRepos test load repos from the configuration file.
 func TestLoadRepos(t *testing.T) {
 	_, remotePath := mocks.InitRemote(t)
 	defer os.RemoveAll(remotePath)
@@ -46,9 +45,9 @@ func TestLoadRepos(t *testing.T) {
 	assert.Nil(t, err)
 }
 
-//TestLoadReposExistingDir tests load to existing repo.
+// TestLoadReposExistingDir tests load to existing repo.
 func TestLoadReposExistingDir(t *testing.T) {
-	bareDir, err := ioutil.TempDir("", "bare-dir")
+	bareDir, err := os.MkdirTemp("", "bare-dir")
 	defer os.RemoveAll(bareDir)
 	assert.Nil(t, err)
 
@@ -60,7 +59,7 @@ func TestLoadReposExistingDir(t *testing.T) {
 	assert.NotNil(t, err)
 }
 
-//TestLoadReposInvalidRepo verifies failure in case wrong url provided.
+// TestLoadReposInvalidRepo verifies failure in case wrong url provided.
 func TestLoadReposInvalidRepo(t *testing.T) {
 	cfg := mock.Config("bogus-url")
 	defer os.RemoveAll(cfg.LocalStore)
