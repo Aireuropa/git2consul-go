@@ -57,7 +57,7 @@ func (r *Repository) checkoutConfigBranches() error {
 	return nil
 }
 
-//CheckoutBranch performs a checkout on the specific branch
+// CheckoutBranch performs a checkout on the specific branch
 func (r *Repository) CheckoutBranch(branch plumbing.ReferenceName) error {
 	err := r.Fetch(&git.FetchOptions{ //nolint:ineffassign,staticcheck
 		RefSpecs: []config.RefSpec{"refs/*:refs/*", "HEAD:refs/heads/HEAD"},
@@ -94,7 +94,7 @@ func remoteBranches(s storer.ReferenceStorer) (storer.ReferenceIter, error) {
 	}, refs), nil
 }
 
-//LocalBranches returns an iterator to iterate only over local branches.
+// LocalBranches returns an iterator to iterate only over local branches.
 func LocalBranches(s storer.ReferenceStorer) (storer.ReferenceIter, error) {
 	refs, err := s.IterReferences()
 	if err != nil {
@@ -106,7 +106,7 @@ func LocalBranches(s storer.ReferenceStorer) (storer.ReferenceIter, error) {
 	}, refs), nil
 }
 
-//StringInSlice checks if value exists within slice.
+// StringInSlice checks if value exists within slice.
 func StringInSlice(a string, list []string) bool {
 	for _, b := range list {
 		if b == a {

@@ -24,7 +24,7 @@ import (
 	"github.com/Aireuropa/git2consul-go/repository"
 )
 
-//Status codes for path formatting
+// Status codes for path formatting
 const (
 	SourceRootNotInPrefix = iota
 	PathFormatterOK

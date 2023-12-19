@@ -35,7 +35,7 @@ type KV struct {
 }
 
 // Get TODO write a useful documentation here
-func (kv *KV) Get(key string, opts *api.QueryOptions) (*api.KVPair, *api.QueryMeta, error) {
+func (kv *KV) Get(key string, _ *api.QueryOptions) (*api.KVPair, *api.QueryMeta, error) {
 	kv.T.Logf("KV Get %s", key)
 	if val, ok := kv.items[key]; ok {
 		return &api.KVPair{Key: key, Value: val.value, ModifyIndex: val.modifyindex}, nil, nil
@@ -44,7 +44,7 @@ func (kv *KV) Get(key string, opts *api.QueryOptions) (*api.KVPair, *api.QueryMe
 }
 
 // Put TODO write a useful documentation here
-func (kv *KV) Put(kvPair *api.KVPair, wOptions *api.WriteOptions) (*api.WriteMeta, error) {
+func (kv *KV) Put(kvPair *api.KVPair, _ *api.WriteOptions) (*api.WriteMeta, error) {
 	if kv.items == nil {
 		kv.items = make(map[string]*item)
 	}
@@ -54,13 +54,13 @@ func (kv *KV) Put(kvPair *api.KVPair, wOptions *api.WriteOptions) (*api.WriteMet
 }
 
 // Delete TODO write a useful documentation here
-func (kv *KV) Delete(key string, wOptions *api.WriteOptions) (*api.WriteMeta, error) {
+func (kv *KV) Delete(key string, _ *api.WriteOptions) (*api.WriteMeta, error) {
 	delete(kv.items, key)
 	return nil, nil
 }
 
 // Txn TODO write a useful documentation here
-func (kv *KV) Txn(txnops api.KVTxnOps, opts *api.QueryOptions) (bool, *api.KVTxnResponse, *api.QueryMeta, error) {
+func (kv *KV) Txn(txnops api.KVTxnOps, _ *api.QueryOptions) (bool, *api.KVTxnResponse, *api.QueryMeta, error) {
 	var checkIndexItem *api.KVTxnOp
 	if length := len(txnops); length > 1 && txnops[length-2].Verb == api.KVCheckIndex {
 		checkIndexItem = txnops[length-2]

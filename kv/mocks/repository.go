@@ -53,7 +53,7 @@ func (r *Repo) Add(path string) {
 }
 
 // CheckRef TODO write a useful documentation here
-func (r *Repo) CheckRef(branch string) error {
+func (r *Repo) CheckRef(_ string) error {
 	return nil
 }
 
@@ -64,7 +64,7 @@ func (r *Repo) CheckoutBranch(branch plumbing.ReferenceName) error {
 }
 
 // DiffStatus TODO write a useful documentation here
-func (r *Repo) DiffStatus(commit string) (object.Changes, error) {
+func (r *Repo) DiffStatus(_ string) (object.Changes, error) {
 	var changes object.Changes
 	for _, add := range r.adds {
 		changes = append(changes, &object.Change{From: object.ChangeEntry{}, To: object.ChangeEntry{Name: add}})

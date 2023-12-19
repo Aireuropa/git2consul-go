@@ -33,7 +33,7 @@ type KVHandler struct { //nolint:revive
 	logger *log.Entry
 }
 
-//TransactionIntegrityError implements error to handle any violation of transaction atomicity.
+// TransactionIntegrityError implements error to handle any violation of transaction atomicity.
 type TransactionIntegrityError struct {
 	msg string
 }
@@ -89,8 +89,8 @@ func newAPIClient(config *config.ConsulConfig) (*api.Client, error) {
 	return client, nil
 }
 
-//Put overrides Consul API Put function to add entry to KVTxnOps.
-func (h *KVHandler) Put(kvPair *api.KVPair, wOptions *api.WriteOptions) (*api.WriteMeta, error) {
+// Put overrides Consul API Put function to add entry to KVTxnOps.
+func (h *KVHandler) Put(kvPair *api.KVPair, _ *api.WriteOptions) (*api.WriteMeta, error) {
 	txnItem := &api.KVTxnOp{
 		Verb:  api.KVSet,
 		Key:   kvPair.Key,
@@ -100,8 +100,8 @@ func (h *KVHandler) Put(kvPair *api.KVPair, wOptions *api.WriteOptions) (*api.Wr
 	return nil, nil
 }
 
-//Delete overrides Consul API Delete function to add entry to KVTxnOps.
-func (h *KVHandler) Delete(key string, wOptions *api.WriteOptions) (*api.WriteMeta, error) {
+// Delete overrides Consul API Delete function to add entry to KVTxnOps.
+func (h *KVHandler) Delete(key string, _ *api.WriteOptions) (*api.WriteMeta, error) {
 	txnItem := &api.KVTxnOp{
 		Verb: api.KVDelete,
 		Key:  key,
@@ -110,8 +110,8 @@ func (h *KVHandler) Delete(key string, wOptions *api.WriteOptions) (*api.WriteMe
 	return nil, nil
 }
 
-//DeleteTree overrides Consul API DeleteTree function to add entry to KVTxnOps.
-func (h *KVHandler) DeleteTree(key string, wOptions *api.WriteOptions) (*api.WriteMeta, error) {
+// DeleteTree overrides Consul API DeleteTree function to add entry to KVTxnOps.
+func (h *KVHandler) DeleteTree(key string, _ *api.WriteOptions) (*api.WriteMeta, error) {
 	txnItem := &api.KVTxnOp{
 		Verb: api.KVDeleteTree,
 		Key:  key,
@@ -120,7 +120,7 @@ func (h *KVHandler) DeleteTree(key string, wOptions *api.WriteOptions) (*api.Wri
 	return nil, nil
 }
 
-//Commit function executes set of operations from KVTxnOps as single transaction.
+// Commit function executes set of operations from KVTxnOps as single transaction.
 func (h *KVHandler) Commit() error {
 	defer func() {
 		h.KVTxnOps = nil

@@ -25,7 +25,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-//TestNew verifies repository.Repository object iniciator.
+// TestNew verifies repository.Repository object iniciator.
 func TestNew(t *testing.T) {
 	_, remotePath := mocks.InitRemote(t)
 	defer os.RemoveAll(remotePath)

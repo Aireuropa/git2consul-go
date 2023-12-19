@@ -147,19 +147,19 @@ func testDeleteTextFile(t *testing.T, repo repository.Repo) {
 	assert.NoError(t, err)
 }
 
-func (a mockHandler) PutKV(repo repository.Repo, path string, content []byte) error {
+func (a mockHandler) PutKV(_ repository.Repo, path string, content []byte) error {
 	keys[path] = content
 	return nil
 }
 
-func (a mockHandler) DeleteKV(repo repository.Repo, path string) error {
+func (a mockHandler) DeleteKV(_ repository.Repo, path string) error {
 	if a.filePath != path {
 		return fmt.Errorf("%s differs from %s", a.filePath, path)
 	}
 	return nil
 }
 
-func (a mockHandler) DeleteTreeKV(repo repository.Repo, path string) error {
+func (a mockHandler) DeleteTreeKV(_ repository.Repo, path string) error {
 	filePath := strings.TrimSuffix(a.filePath, filepath.Ext(a.filePath))
 	if filePath != path {
 		return fmt.Errorf("%s differs from %s", a.filePath, path)
@@ -167,6 +167,6 @@ func (a mockHandler) DeleteTreeKV(repo repository.Repo, path string) error {
 	return nil
 }
 
-func (a mockHandler) HandleUpdate(repo repository.Repo) error {
+func (a mockHandler) HandleUpdate(_ repository.Repo) error {
 	return nil
 }

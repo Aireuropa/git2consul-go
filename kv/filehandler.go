@@ -151,21 +151,21 @@ func (f *YAMLFile) GetPath() string {
 func entriesToKV(node map[string]interface{}) map[string][]byte {
 	keys := make(map[string][]byte)
 	for key, value := range node {
-		switch value.(type) {
+		switch vtype := value.(type) {
 		case string:
-			keys[key] = []byte(value.(string))
+			keys[key] = []byte(vtype)
 		case int:
-			keys[key] = []byte(strconv.Itoa(value.(int)))
+			keys[key] = []byte(strconv.Itoa(vtype))
 		case bool:
-			keys[key] = []byte(strconv.FormatBool(value.(bool)))
+			keys[key] = []byte(strconv.FormatBool(vtype))
 		case float64:
-			keys[key] = []byte(strconv.FormatFloat(value.(float64), 'f', 2, 64))
+			keys[key] = []byte(strconv.FormatFloat(vtype, 'f', 2, 64))
 		case map[string]interface{}:
-			for k, v := range entriesToKV(value.(map[string]interface{})) {
+			for k, v := range entriesToKV(vtype) {
 				keys[filepath.Join(key, k)] = v
 			}
 		case []interface{}:
-			for index, item := range value.([]interface{}) {
+			for index, item := range vtype {
 				for k, v := range entriesToKV(item.(map[string]interface{})) {
 					keys[filepath.Join(key, strconv.Itoa(index), k)] = v
 				}
