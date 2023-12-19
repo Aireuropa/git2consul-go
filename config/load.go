@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 	"time"
 
@@ -67,6 +68,22 @@ func Load(file string) (*Config, error) {
 	return config, nil
 }
 
+// isValidGitURL verifica si una URL de Git es válida.
+func isValidGitURL(url string) bool {
+	// Patrón de expresión regular para verificar URLs de Git (HTTP/HTTPS)
+	gitHTTPURLPattern := `^(https?|git):\/\/[^\s/$.?#].[^\s]*\.git$`
+
+	// Patrón de expresión regular para verificar URLs de Git (SSH)
+	gitSSHURLPattern := `^[^\s@]+@([^\s:]+):[^\s/]+/[^\s]+\.git$`
+
+	// Compilar las expresiones regulares
+	regexHTTP := regexp.MustCompile(gitHTTPURLPattern)
+	regexSSH := regexp.MustCompile(gitSSHURLPattern)
+
+	// Verificar si la URL coincide con alguno de los patrones
+	return regexHTTP.MatchString(url) || regexSSH.MatchString(url)
+}
+
 // Check for the validity of the configuration file
 func (c *Config) checkConfig() error {
 	for _, repo := range c.Repos {
@@ -78,6 +95,10 @@ func (c *Config) checkConfig() error {
 		// Check on Url
 		if len(repo.URL) == 0 {
 			return fmt.Errorf("%s does no have a repository URL", repo.Name)
+		}
+
+		if !isValidGitURL(repo.URL) {
+			return fmt.Errorf("'%s' is not valid git url", repo.URL)
 		}
 
 		// Check on hooks

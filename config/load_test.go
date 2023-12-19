@@ -17,6 +17,7 @@ limitations under the License.
 package config
 
 import (
+	"fmt"
 	"path/filepath"
 	"testing"
 
@@ -41,4 +42,39 @@ func TestLoadInvalidConfig(t *testing.T) {
 
 	_, err := Load(file)
 	assert.Error(t, err)
+}
+
+func TestIsValidGitURL(t *testing.T) {
+	// Casos de prueba positivos
+	validURLs := []string{
+		"https://github.com/usuario/repo.git",
+		"git://github.com/usuario/repo.git",
+		"https://gitlab.com/usuario/repo.git",
+		"git://gitlab.com/usuario/repo.git",
+		"git@bitbucket.org:workspace/repo.git",
+	}
+
+	for _, url := range validURLs {
+		t.Run(fmt.Sprintf("ValidURL: %s", url), func(t *testing.T) {
+			if !isValidGitURL(url) {
+				t.Errorf("Se esperaba que la URL fuera válida, pero no lo es.")
+			}
+		})
+	}
+
+	// Casos de prueba negativos
+	invalidURLs := []string{
+		"invalid-url",
+		"https://example.com",
+		"ftp://github.com/usuario/repo.git",
+		"https://bitbucket.org/usuario/repo",
+	}
+
+	for _, url := range invalidURLs {
+		t.Run(fmt.Sprintf("InvalidURL: %s", url), func(t *testing.T) {
+			if isValidGitURL(url) {
+				t.Errorf("Se esperaba que la URL fuera inválida, pero es válida.")
+			}
+		})
+	}
 }
