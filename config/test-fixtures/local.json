@@ -2,7 +2,7 @@
   "repos": [
     {
       "name": "test-example",
-      "url": "./test-fixtures/example",
+      "url": "git@github.com:Aireuropa/git2consul-go.git",
       "branches": [
         "master",
         "test"
