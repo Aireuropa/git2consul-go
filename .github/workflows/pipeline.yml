@@ -25,16 +25,16 @@ jobs:
     - name: Compile
       run: make build
     - name: golangci-lint
-      uses: golangci/golangci-lint-action@v3.7.0
+      uses: golangci-lint-action@v5
       with:
-        version: v1.55.2
+        version: v1.57
         skip-go-installation: true
         skip-pkg-cache: true
         skip-build-cache: true
     - name: Test
       run: make test-unit
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3.1.4
+      uses: codecov/codecov-action@v4
       with:
         fail_ci_if_error: true
         files: ./coverage.txt
