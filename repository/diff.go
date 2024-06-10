@@ -19,6 +19,7 @@ package repository
 import (
 	"strings"
 
+	"github.com/apex/log"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
 )
@@ -66,12 +67,18 @@ func applySourceRoot(changes object.Changes, sourceRoot string) object.Changes {
 		name := ""
 		if change.From != empty {
 			name = change.From.Name
+			log.WithField("caller", "DiffStatus").Infof("KV change.From: (%s) %v", name, change)
 		} else {
 			name = change.To.Name
+		}
+		if change.To != empty {
+			log.WithField("caller", "DiffStatus").Infof("KV change.To: (%s) %v", change.To.Name, change)
 		}
 		if strings.HasPrefix(name, sourceRoot) {
 			selected = append(selected, change)
 		}
+		log.WithField("caller", "DiffStatus").Infof("KV change: (%s) %v", name, change)
 	}
+	log.WithField("caller", "DiffStatus").Infof("KV Diff Selected: %v", selected)
 	return selected
 }

@@ -72,6 +72,7 @@ func (h *KVHandler) UpdateToHead(repo repository.Repo) error {
 	// Local ref
 	refHash := head.Hash().String()
 	// log.Debugf("(consul) kvRef: %s | localRef: %s", kvRef, localRef)
+	log.Infof("(consul update) kvRef: (%d) %s ", len(kvRef), kvRef)
 
 	if len(kvRef) == 0 {
 		log.Infof("KV PUT changes: %s/%s", repo.Name(), refName)
@@ -97,13 +98,14 @@ func (h *KVHandler) UpdateToHead(repo repository.Repo) error {
 		if err != nil {
 			return err
 		}
+		h.logger.Infof("KV PUT Delta: %s", deltas)
 		h.handleDeltas(repo, deltas) //nolint:errcheck
 
 		err = h.putKVRef(repo, refName)
 		if err != nil {
 			return err
 		}
-		h.logger.Infof("KV PUT ref: %s/%s", repo.Name(), refName)
+		h.logger.Infof("KV PUT ref2: %s/%s", repo.Name(), refName)
 	}
 
 	return nil
